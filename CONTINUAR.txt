@@ -1,0 +1,24 @@
+CONTINUAR:
+Preciso fazer testes unitarios em JS para a seguinte função.  
+Primeiramente liste os tesres que você pensa em fazer que seria essenciais para o bom funcionamento desse código em produção.
+async funtion processarPedido(pedido) {
+      try {
+            // Etapa 1: Verificar estoque
+             await verificarEstoque(pedido.itens);
+            
+            // Etapa 2: Processar pagamento
+            const resultadoPagamento = await processarPagamento(pedido.pagamento);
+
+            //Etapa 3: Notificar cliente
+             await enviarEmailConfirmacao(pedido.cliente, resultadoPagamento);
+
+             consoli.log("Pedido concluído com sucesso!");
+             return { success: true, order: pedido.id };
+
+              } catch (erro) {
+                //Tratamento específico para tipo de erro
+                if (erro intranceof SemEstoqueErro) {
+                    consoli.erro("itens sem estoque:", erro.itens); 
+                    await reabastecerNotificacao(erro.itns);
+               } else {
+                    consoli.erro("Pgamento recusado:", erro.detalhes);

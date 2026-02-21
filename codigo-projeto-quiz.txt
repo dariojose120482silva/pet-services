@@ -1,0 +1,374 @@
+index.html
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Gerador de Quiz Dinâmico</title>
+    <!-- Inclui Tailwind CSS para estilização rápida e responsiva -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="p-4 sm:p-8 flex justify-center items-center min-h-screen">
+
+    <div id="main-content" class="w-full max-w-lg bg-white rounded-xl shadow-2xl p-6 sm:p-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">
+            🧠 Gerador de Quiz Dinâmico
+        </h1>
+        
+        <!-- Área de Geração de Quiz -->
+        <div class="mb-6 pb-4 border-b border-gray-200">
+            <label for="quiz-prompt" class="block text-sm font-medium text-gray-700 mb-2">
+                Qual exercício você quer criar?
+            </label>
+            <textarea id="quiz-prompt" 
+                      rows="2"
+                      class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 text-gray-700"
+                      placeholder="Ex: Gere 5 perguntas de múltipla escolha sobre Tags Semânticas em HTML5."></textarea>
+            
+            <button id="generate-quiz-button" 
+                    class="mt-3 w-full py-3 px-6 bg-purple-600 text-white font-semibold rounded-lg shadow-md hover:bg-purple-700 transition duration-300 flex items-center justify-center disabled:opacity-50">
+                Gerar Novo Quiz
+            </button>
+            
+            <div id="loading-indicator" class="hidden mt-3 text-center text-sm text-gray-500">
+                <div class="lds-dual-ring inline-block align-middle mr-2"></div> Gerando perguntas...
+            </div>
+             <p id="error-message" class="hidden text-sm text-red-500 mt-2"></p>
+        </div>
+
+
+        <!-- Seção do Quiz em Execução -->
+        <div id="quiz-area" class="hidden">
+            <p id="question-text" class="text-xl font-semibold mb-6 text-gray-700">
+                <!-- O texto da pergunta será inserido aqui pelo JS -->
+            </p>
+            
+            <!-- Opções de Resposta -->
+            <div id="options-container" class="space-y-4">
+                <!-- As opções serão inseridas aqui pelo JS -->
+            </div>
+
+            <!-- Seção de Feedback e Navegação -->
+            <div class="mt-8 pt-6 border-t border-gray-200">
+                <!-- Mensagem de feedback (Correto/Incorreto) -->
+                <div id="feedback-message" class="text-center font-bold text-lg mb-4 h-6"></div>
+
+                <!-- Botões de Ação -->
+                <div class="flex justify-between space-x-4">
+                    <button id="next-button" 
+                            class="w-full py-3 px-6 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300 disabled:opacity-50"
+                            disabled>
+                        Próxima Pergunta
+                    </button>
+                </div>
+
+                <!-- Progresso -->
+                <p id="progress-text" class="text-sm text-gray-500 mt-4 text-center"></p>
+            </div>
+        </div>
+        <p id="initial-message" class="text-center text-gray-500 mt-6">
+            Digite o seu pedido e clique em "Gerar Novo Quiz" para começar!
+        </p>
+
+    </div>
+
+    <!-- Modal de Resultado Final (Invisível por padrão) -->
+    <div id="results-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-xl p-8 max-w-sm w-full text-center">
+            <h2 class="text-2xl font-bold text-green-600 mb-4">Quiz Concluído! 🎉</h2>
+            <p id="score-text" class="text-xl text-gray-700 mb-6"></p>
+            <button id="restart-generator-button" 
+                    class="w-full py-3 px-6 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 transition duration-300">
+                Gerar Outro Quiz
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+///////////////////////////
+
+style.css
+  body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+
+        
+        .lds-dual-ring {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+        }
+        .lds-dual-ring:after {
+            content: " ";
+            display: block;
+            width: 16px;
+            height: 16px;
+            margin: 1px;
+            border-radius: 50%;
+            border: 3px solid #fff;
+            border-color: #fff transparent #fff transparent;
+            animation: lds-dual-ring 1.2s linear infinite;
+        }
+        @keyframes lds-dual-ring {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+/////////////////////////////
+
+Outra versão de estilos:
+      style.css 2:
+/* Estilo para o Meu Quiz Gemini */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+}
+
+h1 {
+    color: #1a73e8;
+    margin-bottom: 1.5rem;
+}
+
+input[type="text"] {
+    width: 80%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    margin-bottom: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus {
+    border-color: #1a73e8;
+}
+
+button {
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #1557b0;
+}
+
+#resultado {
+    margin-top: 2rem;
+    text-align: left;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 5px solid #1a73e8;
+    white-space: pre-wrap; /* Mantém a formatação do texto da IA */
+    color: #333;
+    line-height: 1.6;
+}
+
+//////////////////////////////
+
+script.js
+
+// 1. Elementos do Site (IDs do seu HTML)
+const quizPrompt = document.getElementById('quiz-prompt');
+const generateButton = document.getElementById('generate-quiz-button');
+const loadingIndicator = document.getElementById('loading-indicator');
+const errorMessage = document.getElementById('error-message');
+const quizArea = document.getElementById('quiz-area');
+const initialMessage = document.getElementById('initial-message');
+const questionText = document.getElementById('question-text');
+const optionsContainer = document.getElementById('options-container');
+const nextButton = document.getElementById('next-button');
+const feedbackMessage = document.getElementById('feedback-message');
+const progressText = document.getElementById('progress-text');
+const resultsModal = document.getElementById('results-modal');
+const scoreText = document.getElementById('score-text');
+const restartGeneratorButton = document.getElementById('restart-generator-button');
+
+////////
+
+// 2. Estado do Quiz
+let quizData = [];
+let currentQuestionIndex = 0;
+let score = 0;
+let answered = false;
+
+/////////
+// 3. Função para Gerar o Quiz (Conecta com a Vercel)
+///////////
+async function generateQuizFromPrompt() {
+    const tema = document.getElementById('tema-input')?.value || document.getElementById('input-tema')?.value;
+    const errorMessage = document.getElementById('error-message');
+    
+    // Esconde erro anterior e mostra que está carregando
+    if (errorMessage) errorMessage.classList.add('hidden');
+    console.log("Iniciando geração para o tema:", tema);
+
+    try {
+        const response = await fetch('/api/v2-generate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt: tema })
+        });
+
+        if (!response.ok) throw new Error(`Erro na rede: ${response.status}`);
+
+        const data = await response.json();
+        console.log("Resposta da API:", data);
+
+        // --- VALIDAÇÃO DE SEGURANÇA (O QUE EVITA O ERRO '0') ---
+        if (!data || data.error || !data.candidates || !data.candidates[0]) {
+            console.error("Erro detalhado da API:", data);
+            throw new Error(data.error?.message || "A IA não retornou dados válidos.");
+        }
+
+        // Extrai o texto da IA
+        let quizText = data.candidates[0].content.parts[0].text;
+
+        // Limpa marcações de Markdown (```json ... ```) se existirem
+        quizText = quizText.replace(/```json|```/g, '').trim();
+
+        // Converte o texto em perguntas reais
+        quizData = JSON.parse(quizText);
+
+        // Inicia o jogo (essa função deve existir no seu script)
+        if (typeof iniciarNovoQuiz === "function") {
+            iniciarNovoQuiz();
+        } else {
+            console.error("Função iniciarNovoQuiz não encontrada!");
+        }
+
+    } catch (error) {
+        console.error("Erro no processo:", error);
+        if (errorMessage) {
+            errorMessage.textContent = "Erro: " + error.message;
+            errorMessage.classList.remove('hidden');
+        }
+    }
+}
+///////////
+// 4. Lógica do Jogo
+function iniciarNovoQuiz() {
+    currentQuestionIndex = 0;
+    score = 0;
+    quizArea.classList.remove('hidden');
+    initialMessage.classList.add('hidden');
+    carregarPergunta();
+}
+
+function carregarPergunta() {
+    if (currentQuestionIndex >= quizData.length) {
+        mostrarResultados();
+        return;
+    }
+
+    answered = false;
+    nextButton.disabled = true;
+    feedbackMessage.textContent = '';
+    optionsContainer.innerHTML = '';
+
+    const perguntaAtual = quizData[currentQuestionIndex];
+
+    // Suporta nomes em português ou inglês que a IA possa enviar
+    questionText.textContent = `${currentQuestionIndex + 1}. ${perguntaAtual.pergunta || perguntaAtual.question}`;
+
+    const opcoes = perguntaAtual.opcoes || perguntaAtual.options;
+    const correta = perguntaAtual.correta !== undefined ? perguntaAtual.correta : perguntaAtual.answerIndex;
+
+    opcoes.forEach((opcao, index) => {
+        const botao = document.createElement('button');
+        botao.textContent = opcao;
+        botao.className = 'w-full text-left py-3 px-4 bg-gray-100 text-gray-800 rounded-lg hover:bg-blue-200 transition duration-200 font-medium shadow-sm';
+        botao.onclick = () => selecionarResposta(index, correta, perguntaAtual.justificativa || perguntaAtual.justification);
+        optionsContainer.appendChild(botao);
+    });
+
+    atualizarProgresso();
+}
+
+function selecionarResposta(indiceSelecionado, indiceCorreto, justificativa) {
+    if (answered) return;
+    answered = true;
+    nextButton.disabled = false;
+
+    const botoes = optionsContainer.children;
+
+    Array.from(botoes).forEach((botao, index) => {
+        if (botao.tagName !== 'BUTTON') return;
+        botao.disabled = true;
+        if (index === indiceCorreto) {
+            botao.classList.add('bg-green-500', 'text-white');
+        } else if (index === indiceSelecionado) {
+            botao.classList.add('bg-red-500', 'text-white');
+        }
+    });
+
+    if (indiceSelecionado === indiceCorreto) {
+        score++;
+        feedbackMessage.textContent = '🎉 Correto! 🎉';
+        feedbackMessage.className = 'text-green-600 font-bold mt-2 text-center';
+    } else {
+        feedbackMessage.textContent = '❌ Incorreto!';
+        feedbackMessage.className = 'text-red-500 font-bold mt-2 text-center';
+    }
+
+    if (justificativa) {
+        const p = document.createElement('p');
+        p.textContent = `💡 Explicação: ${justificativa}`;
+        p.className = 'mt-4 p-3 bg-blue-50 border-l-4 border-blue-500 text-sm text-gray-700 rounded-md';
+        optionsContainer.appendChild(p);
+    }
+}
+
+function atualizarProgresso() {
+    progressText.textContent = `Questão ${currentQuestionIndex + 1} de ${quizData.length}`;
+    nextButton.textContent = currentQuestionIndex === quizData.length - 1 ? 'Ver Resultados' : 'Próxima Pergunta';
+}
+
+function mostrarResultados() {
+    scoreText.textContent = `Você acertou ${score} de ${quizData.length} questões!`;
+    resultsModal.classList.remove('hidden');
+}
+
+function reiniciarGerador() {
+    resultsModal.classList.add('hidden');
+    quizArea.classList.add('hidden');
+    initialMessage.classList.remove('hidden');
+    quizPrompt.value = '';
+}
+
+// 5. Cliques dos Botões
+generateButton.addEventListener('click', generateQuizFromPrompt);
+nextButton.addEventListener('click', () => {
+    currentQuestionIndex++;
+    carregarPergunta();
+});
+restartGeneratorButton.addEventListener('click', reiniciarGerador);
+
