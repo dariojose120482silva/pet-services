@@ -3,3 +3,16 @@
 *.png
 *.pdf
 desktop.ini
+# Ignorar pastas de configuração
+.vscode/
+Minhas Formas/
+
+# Ignorar todos os arquivos de texto e rascunho
+*.txt
+*.png
+*.pdf
+desktop.ini
+
+# Abrir exceção apenas para as imagens do projeto que estão em asset
+!asset/**/*.png
+!asset/**/*.jpg
